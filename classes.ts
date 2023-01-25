@@ -41,6 +41,15 @@ class Piece {
     this.moved = moved;
     this.color = color;
   }
+  get pos() {
+    return this.position;
+  }
+  get move() {
+    return this.moved;
+  }
+  get colour() {
+    return this.color;
+  }
 }
 export class Pawn extends Piece {
   validateMove(move: string) {

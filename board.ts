@@ -2,6 +2,8 @@
 
 import { Pawn, Knight, Bishop, Rook, Queen, King } from "./classes";
 
+let alphabet = "abcdefgh";
+
 interface board {
   a: any[];
   b: any[];
@@ -117,11 +119,60 @@ class Board implements Position {
     this.position = position;
     this.materialImbalance = materialImbalance;
     this.centerSquares = [
-      this.position.d[4],
-      this.position.e[4],
-      this.position.d[5],
-      this.position.e[5],
+      this.position.d[4 - 1],
+      this.position.e[4 - 1],
+      this.position.d[4 - 1],
+      this.position.e[4 - 1],
     ];
+  }
+
+  getMovementDirection(oldX: number, oldY: number, newX: number, newY: number) {
+    if (
+      Math.abs(newX - oldX) === Math.abs(newY - oldY) &&
+      newX - oldX < 0 &&
+      newY - oldY > 0
+    ) {
+      return 1;
+    } else if (
+      Math.abs(newX - oldX) === Math.abs(newY - oldY) &&
+      newX - oldX > 0 &&
+      newY - oldY > 0
+    ) {
+      return 2;
+    } else if (
+      Math.abs(newX - oldX) === Math.abs(newY - oldY) &&
+      newX - oldX > 0 &&
+      newY - oldY < 0
+    ) {
+      return 3;
+    } else if (
+      Math.abs(newX - oldX) === Math.abs(newY - oldY) &&
+      newX - oldX > 0 &&
+      newY - oldY < 0
+    ) {
+      return 4;
+    }
+  }
+  validateMove(square: string, newPos: string) {
+    let position =
+      this.position[alphabet.indexOf(square[0])][parseInt(square[1])].pos;
+    let posNew =
+      this.position[alphabet.indexOf(newPos[0])][parseInt(newPos[1])].pos;
+    let oldX = alphabet.indexOf(square[0]) + 1;
+    let oldY = parseInt(square[1]);
+    let newX = alphabet.indexOf(newPos[0]) + 1;
+    let newY = parseInt(newPos[1]);
+
+    //Eight If statements to cover ALL 8 DIRECTIONS
+
+    if (newPos[2] != "x" && posNew != new Empty(newPos)) {
+      return false;
+    }
+
+    switch (this.getMovementDirection(oldX, oldY, newX, newY)) {
+    }
+
+    return position.validateMove(newPos);
   }
 
   evaluatePosition() {
