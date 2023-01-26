@@ -1,5 +1,5 @@
 /* use strict */
-
+//Supporter start
 import { Pawn, Knight, Bishop, Rook, Queen, King } from "./classes";
 
 let alphabet = "abcdefgh";
@@ -27,6 +27,12 @@ class Empty {
     this.position = position;
   }
 }
+
+//Supporter end
+
+/* This Chess Engine uses an HCE, Hand-Picked Evaluation.
+ * NNUE shall be implemented later on.
+ */
 
 const baseBoard: board = {
   a: [
@@ -126,50 +132,68 @@ class Board implements Position {
     ];
   }
 
-  getMovementDirection(oldX: number, oldY: number, newX: number, newY: number) {
-    if (
-      Math.abs(newX - oldX) === Math.abs(newY - oldY) &&
-      newX - oldX < 0 &&
-      newY - oldY > 0
-    ) {
-      return 1;
-    } else if (
-      Math.abs(newX - oldX) === Math.abs(newY - oldY) &&
-      newX - oldX > 0 &&
-      newY - oldY > 0
-    ) {
-      return 2;
-    } else if (
-      Math.abs(newX - oldX) === Math.abs(newY - oldY) &&
-      newX - oldX > 0 &&
-      newY - oldY < 0
-    ) {
-      return 3;
-    } else if (
-      Math.abs(newX - oldX) === Math.abs(newY - oldY) &&
-      newX - oldX > 0 &&
-      newY - oldY < 0
-    ) {
-      return 4;
+  getMovementDirection(
+    oldX: number,
+    oldY: number,
+    newX: number,
+    newY: number
+  ): number {
+    let direction: number;
+    direction = 0;
+    if (Math.abs(newX - oldX) === Math.abs(newY - oldY)) {
+      switch (true) {
+        case newX - oldX > 0 && newY - oldY > 0:
+          direction = 1;
+          break;
+        case newX - oldX < 0 && newY - oldY > 0:
+          direction = 2;
+          break;
+        case newX - oldX > 0 && newY - oldY < 0:
+          direction = 3;
+          break;
+        case newX - oldX < 0 && newY - oldY < 0:
+          direction = 4;
+          break;
+      }
+      return direction;
     }
+
+    if (Math.abs(newX - oldX) > 0 && Math.abs(newY - oldY) == 0) {
+      switch (true) {
+        case newX - oldX > 0:
+          direction = 5;
+          break;
+        case newX - oldX < 0:
+          direction = 6;
+          break;
+      }
+    }
+
+    if (Math.abs(newX - oldX) == 0 && Math.abs(newY - oldY) > 0) {
+      switch (true) {
+        case newY - oldY > 0:
+          direction = 7;
+          break;
+        case newY - oldY < 0:
+          direction = 8;
+          break;
+      }
+    }
+    return direction;
   }
+
   validateMove(square: string, newPos: string) {
     let position =
-      this.position[alphabet.indexOf(square[0])][parseInt(square[1])].pos;
+      this.position[alphabet.indexOf(square[0])][parseInt(square[1])];
     let posNew =
-      this.position[alphabet.indexOf(newPos[0])][parseInt(newPos[1])].pos;
+      this.position[alphabet.indexOf(newPos[0])][parseInt(newPos[1])];
     let oldX = alphabet.indexOf(square[0]) + 1;
     let oldY = parseInt(square[1]);
     let newX = alphabet.indexOf(newPos[0]) + 1;
     let newY = parseInt(newPos[1]);
 
-    //Eight If statements to cover ALL 8 DIRECTIONS
-
     if (newPos[2] != "x" && posNew != new Empty(newPos)) {
       return false;
-    }
-
-    switch (this.getMovementDirection(oldX, oldY, newX, newY)) {
     }
 
     return position.validateMove(newPos);
