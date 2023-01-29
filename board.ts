@@ -182,6 +182,10 @@ class Board implements Position {
     return direction;
   }
 
+checkCollisions(direction: number, position: any, newPosition: any, square:any, newSquare: any){
+  
+}
+  
   validateMove(square: string, newPos: string) {
     let position =
       this.position[(alphabet.indexOf(square[0]) as unknown as keyof typeof this.position)][parseInt(square[1])];
@@ -199,6 +203,8 @@ class Board implements Position {
     return position.validateMove(newPos);
   }
 
+
+  
   evaluatePosition() {
     //TODO: Implement eval
   }
