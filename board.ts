@@ -184,9 +184,9 @@ class Board implements Position {
 
   validateMove(square: string, newPos: string) {
     let position =
-      this.position[alphabet.indexOf(square[0])][parseInt(square[1])];
+      this.position[(alphabet.indexOf(square[0]) as unknown as keyof typeof this.position)][parseInt(square[1])];
     let posNew =
-      this.position[alphabet.indexOf(newPos[0])][parseInt(newPos[1])];
+      this.position[(alphabet.indexOf(newPos[0]) as unknown as keyof typeof this.position][parseInt(newPos[1])];
     let oldX = alphabet.indexOf(square[0]) + 1;
     let oldY = parseInt(square[1]);
     let newX = alphabet.indexOf(newPos[0]) + 1;
