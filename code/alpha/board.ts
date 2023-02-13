@@ -183,65 +183,67 @@ class Board implements Position {
 
   checkCollisions(
     direction: number,
-    piece: any,
-    newLocation: any,
-    square: any,
-    newSquare: any
+    oldX: any,
+    oldY: any,
+    newX: any,
+    newY: any
   ) {
     let directionFunc;
     switch (direction) {
       case 1: //top right
-        directionFunc = (x: any, y: any) => [x, y];
+        directionFunc = (x: any, y: any, i: any) => [x + i , y + i];
         break;
       case 2: //top left
-        directionFunc = (x: any, y: any) => [x, y];
+        directionFunc = (x: any, y: any, i: any) => [x - i, y + i];
         directionFunc = (i: any) => i;
         break;
       case 3: //bottom right
-        directionFunc = (x: any, y: any) => [x, y];
-        break;
+        directionFunc = (x: any, y: any, i: any) => [x + i, y - i];
+        brea;
       case 4: //bottom left
-        directionFunc = (x: any, y: any) => [x, y];
-        break;
+        directionFunc = (x: any, y: any, i: any) => [x - i, y - i];
+        break; - 1
       case 5: //right
-        directionFunc = (x: any, y: any) => [x, y];
+        directionFunc = (x: any, y: any, i: any) => [x + i, y];
         break;
       case 6: //left
-        directionFunc = (x: any, y: any) => [x, y];
+        directionFunc = (x: any, y: any, i: any) => [x - i, y];
         break;
       case 7: //up
-        directionFunc = (x: any, y: any) => [x, y];
+        directionFunc = (x: any, y: any, i: any) => [x, y + i];
         break;
       case 8: //down
-        directionFunc = (x: any, y: any) => [x, y];
+        directionFunc = (x: any, y: any, i: any) => [x, y  - i];
         break;
     }
-    return (
-      (newSquare[2] != "x" && newLocation == new Empty(newSquare)) || false //TODO: Implement capture
-    );
+  for (let i = 0, i <= 8; i++) {
+    if (this.position[newX = i])
+    let pieceDetected
+  }
+
   }
 
   validateMove(square: string, newPos: string) {
     //Support
-    let position =
+    /*let position =
       this.position[
         alphabet.indexOf(square[0]) as unknown as keyof typeof this.position
       ][parseInt(square[1])];
     let posNew =
       this.position[
         alphabet.indexOf(newPos[0]) as unknown as keyof typeof this.position
-      ][parseInt(newPos[1])];
-    let oldX = alphabet.indexOf(square[0]) + 1;
+      ][parseInt(newPos[1])]; */
+    let oldX = alphabet.indexOf(square[0]) ;
     let oldY = parseInt(square[1]);
-    let newX = alphabet.indexOf(newPos[0]) + 1;
+    let newX = alphabet.indexOf(newPos[0]);
     let newY = parseInt(newPos[1]);
     let direction = this.getMovementDirection(oldX, oldY, newX, newY);
     let collisionTest = this.checkCollisions(
       direction,
-      position,
-      posNew,
-      square,
-      newPos
+      oldX,
+      oldY,
+      newX,
+      newY
     );
     //Main
     return position.validateMove(newPos) == true && collisionTest == true;
