@@ -217,10 +217,10 @@ class Board implements Position {
         break;
     }
   for (let i = 0, i <= 8; i++) {
-    if (this.position[newX = i])
-    let pieceDetected
+    if (this.position[]).constructor.name != "Empty" && )
+    let pieceDetected = true
   }
-
+return !pieceDetected
   }
 
   validateMove(square: string, newPos: string) {
