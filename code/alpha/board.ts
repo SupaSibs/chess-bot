@@ -188,41 +188,41 @@ class Board implements Position {
     newX: any,
     newY: any
   ) {
-    let directionFunc;
+    let directionFunc: Function = () => {};
     switch (direction) {
       case 1: //top right
-        directionFunc = (x: any, y: any, i: any) => [x + i , y + i];
+        directionFunc = (x: number, y: number, i: number) => {return {x: x + i, y: y + i}};
         break;
       case 2: //top left
-        directionFunc = (x: any, y: any, i: any) => [x - i, y + i];
-        directionFunc = (i: any) => i;
+        directionFunc = (x: number, y: number, i: number) => {return {x: x - i, y: y + i}};
         break;
       case 3: //bottom right
-        directionFunc = (x: any, y: any, i: any) => [x + i, y - i];
-        brea;
+        directionFunc = (x: number, y: number, i: number) => {return {x: x + i, y: y - i}};
+        break;
       case 4: //bottom left
-        directionFunc = (x: any, y: any, i: any) => [x - i, y - i];
-        break; - 1
+        directionFunc = (x: number, y: number, i: number) => {return {x: x - i, y: y - i}};
+        break; 
       case 5: //right
-        directionFunc = (x: any, y: any, i: any) => [x + i, y];
+        directionFunc = (x: number, y: number, i: number) => {return {x: x + i, y: y}};
         break;
       case 6: //left
-        directionFunc = (x: any, y: any, i: any) => [x - i, y];
+        directionFunc = (x: number, y: number, i: number) => {return {x: x - i, y: y}};
         break;
       case 7: //up
-        directionFunc = (x: any, y: any, i: any) => [x, y + i];
+        directionFunc = (x: number, y: number, i: number) => {return {x: x, y: y + i}};
         break;
       case 8: //down
-        directionFunc = (x: any, y: any, i: any) => [x, y  - i];
+        directionFunc = (x: number, y: number, i: number) => {return {x: x, y: y - i}};
         break;
     }
-  for (let i = 0, i <= 8; i++) {
-    if (this.position[]).constructor.name != "Empty" && )
-    let pieceDetected = true
+    let pieceDetected
+  for (let i = 0; i <= 8; i++) {
+    if (this.position[(directionFunc(oldX, oldY, i).x as unknown as keyof typeof this.position)].constructor.name != "Empty") {
+     pieceDetected = true
   }
 return !pieceDetected
   }
-
+  }
   validateMove(square: string, newPos: string) {
     //Support
     /*let position =
