@@ -186,7 +186,8 @@ class Board implements Position {
     oldX: any,
     oldY: any,
     newX: any,
-    newY: any
+    newY: any,
+    colour: any
   ) {
     let directionFunc: Function = () => {};
     switch (direction) {
@@ -215,44 +216,40 @@ class Board implements Position {
         directionFunc = (x: number, y: number, i: number) => {return {x: x, y: y - i}};
         break;
     }
-    let pieceDetected
+    let pieceDetected;
   for (let i = 0; i <= 8; i++) {
-    if (this.position[(directionFunc(oldX, oldY, i).x as unknown as keyof typeof this.position)].constructor.name != "Empty") {
+    let xy = directionFunc(oldX, oldY, i)
+    if (this.position[xy.x as unknown as keyof typeof this.position][xy.y as unknown as keyof typeof this.position].constructor.name != "Empty" && this.position[xy.x as unknown as keyof typeof this.position][xy.y as unknown as keyof typeof this.position].colour == colour) {
      pieceDetected = true
   }
-return !pieceDetected
+if (pieceDetected) {
+  return {detection: pieceDetected, squareDetected: alphabet[xy.x] + xy.y}
+}
   }
   }
-  validateMove(square: string, newPos: string) {
+  validateMove(square: string, move: string, colour: string) {
     //Support
-    /*let position =
-      this.position[
-        alphabet.indexOf(square[0]) as unknown as keyof typeof this.position
-      ][parseInt(square[1])];
-    let posNew =
-      this.position[
-        alphabet.indexOf(newPos[0]) as unknown as keyof typeof this.position
-      ][parseInt(newPos[1])]; */
     let oldX = alphabet.indexOf(square[0]) ;
     let oldY = parseInt(square[1]);
-    let newX = alphabet.indexOf(newPos[0]);
-    let newY = parseInt(newPos[1]);
+    let newX = alphabet.indexOf(move);
+    let newY = parseInt(move[1]);
     let direction = this.getMovementDirection(oldX, oldY, newX, newY);
     let collisionTest = this.checkCollisions(
       direction,
       oldX,
       oldY,
       newX,
-      newY
+      newY,
+      colour
     );
     //Main
-    return position.validateMove(newPos) == true && collisionTest == true;
-  }
-
+    let validation: boolean = false
+    if(this.position[oldX as unknown as keyof typeof this.position][oldY as unknown as keyof typeof this.position].validateMove(move) == true && collisionTest.detection == true && collisionTest.squareDetected != alphabet[newX] + newY;)
+    {}
   evaluatePosition(randomMove: boolean = false) {
     //TODO: Implement eval
     if (randomMove) {
-      return Math.round(Math.random() * 50);
+      return Math.round(Math.random() * 1000);
     }
   }
 }
