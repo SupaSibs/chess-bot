@@ -248,7 +248,7 @@ if (pieceDetected) {
       validation = true
     }
     for (let i = 0; i <= 8: i++) {
-        if ()
+        if (collisionTest)
           }
   }
   evaluatePosition(randomMove: boolean = false) {
