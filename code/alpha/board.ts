@@ -223,7 +223,7 @@ class Board implements Position {
      pieceDetected = true
   }
 if (pieceDetected) {
-  return {detection: pieceDetected, squareDetected: alphabet[xy.x] + xy.y}
+  return {usedFunc: directionFunc, detection: pieceDetected, squareDetected: alphabet[xy.x] + xy.y}
 }
   }
   }
@@ -244,8 +244,13 @@ if (pieceDetected) {
     );
     //Main
     let validation: boolean = false
-    if(this.position[oldX as unknown as keyof typeof this.position][oldY as unknown as keyof typeof this.position].validateMove(move) == true && collisionTest.detection == true && collisionTest.squareDetected != alphabet[newX] + newY;)
-    {}
+    if(this.position[oldX as unknown as keyof typeof this.position][oldY as unknown as keyof typeof this.position].validateMove(move) == false || collisionTest.detection == true && collisionTest.squareDetected == alphabet[newX] + newY) {
+      validation = true
+    }
+    for (let i = 0; i <= 8: i++) {
+        if ()
+          }
+  }
   evaluatePosition(randomMove: boolean = false) {
     //TODO: Implement eval
     if (randomMove) {
