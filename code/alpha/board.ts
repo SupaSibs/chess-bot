@@ -246,8 +246,18 @@ if (pieceDetected) {
       colour
     );
     //Main
+<<<<<<< HEAD
     let validation: boolean = false;
     return validation;
+=======
+    let validation: boolean = false
+    if(this.position[oldX as unknown as keyof typeof this.position][oldY as unknown as keyof typeof this.position].validateMove(move) == false || collisionTest.detection == true && collisionTest.squareDetected == alphabet[newX] + newY) {
+      validation = true
+    }
+    for (let i = 0; i <= 8: i++) {
+        if (collisionTest)
+          }
+>>>>>>> origin/main
   }
   evaluatePosition(randomMove: boolean = false) {
     //TODO: Implement eval
