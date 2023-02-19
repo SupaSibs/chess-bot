@@ -216,17 +216,20 @@ class Board implements Position {
         directionFunc = (x: number, y: number, i: number) => {return {x: x, y: y - i}};
         break;
     }
-    let pieceDetected;
-  for (let i = 0; i <= 8; i++) {
-    let xy = directionFunc(oldX, oldY, i)
-    if (this.position[xy.x as unknown as keyof typeof this.position][xy.y as unknown as keyof typeof this.position].constructor.name != "Empty" && this.position[xy.x as unknown as keyof typeof this.position][xy.y as unknown as keyof typeof this.position].colour == colour) {
-     pieceDetected = true
-  }
+    let pieceDetected: boolean = false;
+    let xy: {x: number, y: number} = {x:0, y: 0}
+    for (let i = 1; i < 8; i++) {
+    xy = directionFunc(oldX, oldY, i)
+    if (this.position[xy.x as unknown as keyof typeof this.position][xy.y as unknown as keyof typeof this.position].constructor.name === "Empty") {
+      console.log("No errors!")
+    }
+    }
+    
 if (pieceDetected) {
   return {usedFunc: directionFunc, detection: pieceDetected, squareDetected: alphabet[xy.x] + xy.y}
 }
   }
-  }
+
   validateMove(square: string, move: string, colour: string) {
     //Support
     let oldX = alphabet.indexOf(square[0]) ;
@@ -243,13 +246,8 @@ if (pieceDetected) {
       colour
     );
     //Main
-    let validation: boolean = false
-    if(this.position[oldX as unknown as keyof typeof this.position][oldY as unknown as keyof typeof this.position].validateMove(move) == false || collisionTest.detection == true && collisionTest.squareDetected == alphabet[newX] + newY) {
-      validation = true
-    }
-    for (let i = 0; i <= 8: i++) {
-        if (collisionTest)
-          }
+    let validation: boolean = false;
+    return validation;
   }
   evaluatePosition(randomMove: boolean = false) {
     //TODO: Implement eval

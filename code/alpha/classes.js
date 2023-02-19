@@ -48,11 +48,33 @@ var alphabet = "abcdefgh";
  *
  */
 var Piece = /** @class */ (function () {
-    function Piece(position, moved) {
+    function Piece(position, color, moved) {
         if (moved === void 0) { moved = false; }
         this.position = position;
         this.moved = moved;
+        this.color = color;
     }
+    Object.defineProperty(Piece.prototype, "pos", {
+        get: function () {
+            return this.position;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "move", {
+        get: function () {
+            return this.moved;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Piece.prototype, "colour", {
+        get: function () {
+            return this.color;
+        },
+        enumerable: false,
+        configurable: true
+    });
     return Piece;
 }());
 var Pawn = /** @class */ (function (_super) {
