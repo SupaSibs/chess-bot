@@ -217,7 +217,7 @@ class Board implements Position {
         break;
     }
     let pieceDetected: boolean = false;
-    let xy: {x: number, y: number} = {x:0, y: 0}
+    let xy: any = {x:0, y: 0}
     for (let i = 1; i < 8; i++) {
     xy = directionFunc(oldX, oldY, i)
     if (this.position[xy.x as unknown as keyof typeof this.position][xy.y as unknown as keyof typeof this.position].constructor.name === "Empty") {
