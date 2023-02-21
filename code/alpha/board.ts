@@ -192,47 +192,70 @@ class Board implements Position {
     let directionFunc: Function = () => {};
     switch (direction) {
       case 1: //top right
-        directionFunc = (x: number, y: number, i: number) => {return {x: x + i, y: y + i}};
+        directionFunc = (x: number, y: number, i: number) => {
+          return { x: x + i, y: y + i };
+        };
         break;
       case 2: //top left
-        directionFunc = (x: number, y: number, i: number) => {return {x: x - i, y: y + i}};
+        directionFunc = (x: number, y: number, i: number) => {
+          return { x: x - i, y: y + i };
+        };
         break;
       case 3: //bottom right
-        directionFunc = (x: number, y: number, i: number) => {return {x: x + i, y: y - i}};
+        directionFunc = (x: number, y: number, i: number) => {
+          return { x: x + i, y: y - i };
+        };
         break;
       case 4: //bottom left
-        directionFunc = (x: number, y: number, i: number) => {return {x: x - i, y: y - i}};
-        break; 
+        directionFunc = (x: number, y: number, i: number) => {
+          return { x: x - i, y: y - i };
+        };
+        break;
       case 5: //right
-        directionFunc = (x: number, y: number, i: number) => {return {x: x + i, y: y}};
+        directionFunc = (x: number, y: number, i: number) => {
+          return { x: x + i, y: y };
+        };
         break;
       case 6: //left
-        directionFunc = (x: number, y: number, i: number) => {return {x: x - i, y: y}};
+        directionFunc = (x: number, y: number, i: number) => {
+          return { x: x - i, y: y };
+        };
         break;
       case 7: //up
-        directionFunc = (x: number, y: number, i: number) => {return {x: x, y: y + i}};
+        directionFunc = (x: number, y: number, i: number) => {
+          return { x: x, y: y + i };
+        };
         break;
       case 8: //down
-        directionFunc = (x: number, y: number, i: number) => {return {x: x, y: y - i}};
+        directionFunc = (x: number, y: number, i: number) => {
+          return { x: x, y: y - i };
+        };
         break;
     }
     let pieceDetected: boolean = false;
-    let xy: any = {x:0, y: 0}
+    let xy: any = { x: 0, y: 0 };
     for (let i = 1; i < 8; i++) {
-    xy = directionFunc(oldX, oldY, i)
-    if (this.position[xy.x as unknown as keyof typeof this.position][xy.y as unknown as keyof typeof this.position].constructor.name === "Empty") {
-      console.log("No errors!")
+      xy = directionFunc(oldX, oldY, i);
+      if (
+        this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
+          xy.y
+        ].constructor.name != "Empty"
+      ) {
+        pieceDetected = true;
+        break;
+      }
+      if (xy.x == newX && xy.y === newY) {
+        pieceDetected = false;
+        break;
+      }
     }
-    }
-    
-if (pieceDetected) {
-  return {usedFunc: directionFunc, detection: pieceDetected, squareDetected: alphabet[xy.x] + xy.y}
-}
+
+    return pieceDetected;
   }
 
   validateMove(square: string, move: string, colour: string) {
     //Support
-    let oldX = alphabet.indexOf(square[0]) ;
+    let oldX = alphabet.indexOf(square[0]);
     let oldY = parseInt(square[1]);
     let newX = alphabet.indexOf(move);
     let newY = parseInt(move[1]);
@@ -246,18 +269,9 @@ if (pieceDetected) {
       colour
     );
     //Main
-<<<<<<< HEAD
-    let validation: boolean = false;
-    return validation;
-=======
-    let validation: boolean = false
-    if(this.position[oldX as unknown as keyof typeof this.position][oldY as unknown as keyof typeof this.position].validateMove(move) == false || collisionTest.detection == true && collisionTest.squareDetected == alphabet[newX] + newY) {
-      validation = true
-    }
-    for (let i = 0; i <= 8: i++) {
-        if (collisionTest)
-          }
->>>>>>> origin/main
+
+    let validation: boolean = true;
+    if (collisionTest === false) return validation;
   }
   evaluatePosition(randomMove: boolean = false) {
     //TODO: Implement eval
