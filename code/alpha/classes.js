@@ -385,7 +385,6 @@ var BoardMoveConnector = /** @class */ (function () {
                 break;
             }
             if (xy.x == newX && xy.y === newY) {
-                pieceDetected = false;
                 break;
             }
         }

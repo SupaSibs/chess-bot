@@ -35,5 +35,5 @@ var BoardEval = /** @class */ (function (_super) {
 exports.BoardEval = BoardEval;
 //Tests
 var Board = new BoardEval();
-var MoveValidation = Board.validateMove("e2", "e4", "white");
+var MoveValidation = [Board.validateMove("e2", "e4", "white"), Board.validateMove("a1", "a3", "white"), Board.validateMove("a1", "a2", "white")];
 console.log(MoveValidation);

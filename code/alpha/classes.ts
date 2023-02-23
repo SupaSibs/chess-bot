@@ -383,7 +383,6 @@ export class BoardMoveConnector implements Position {
         break;
       }
       if (xy.x == newX && xy.y === newY) {
-        pieceDetected = false;
         break;
       }
     }
