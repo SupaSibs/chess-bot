@@ -255,7 +255,7 @@ interface Position {
   materialImbalance: number;
   centerSquares: any[];
 }
-export class BoardBoiler implements Position {
+export class BoardMoveConnector implements Position {
     position: board;
   materialImbalance: number;
   centerSquares: any[];
@@ -391,4 +391,24 @@ export class BoardBoiler implements Position {
     return pieceDetected;
   }
 
+  validateMove(originalSquare: string, newSquare: string, colour: string) {
+    //Support
+    let oldX = alphabet.indexOf(originalSquare[0]);
+    let oldY = parseInt(originalSquare[1]);
+    let newX = alphabet.indexOf(newSquare[0]);
+    let newY = parseInt(newSquare[1]);
+    let direction = this.getMovementDirection(oldX, oldY, newX, newY);
+    let collisionTest = this.checkCollisions(
+      direction,
+      oldX,
+      oldY,
+      newX,
+      newY,
+      colour
+    );
+    //Main
+
+    let validation: boolean = true;
+    if (collisionTest === false || this.position[alphabet[oldX] as keyof typeof this.position][oldY].validateMove === true) return validation;
+  }
 }
