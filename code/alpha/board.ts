@@ -1,5 +1,4 @@
 /* use strict */
-//Supporter start
 import { BoardMoveConnector } from "./classes";
 export class BoardEval extends BoardMoveConnector {
   evaluatePosition(randomMove: boolean = false) {
