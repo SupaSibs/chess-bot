@@ -1,4 +1,7 @@
+"use strict";
 /* use strict */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BoardMoveConnector = exports.King = exports.Queen = exports.Rook = exports.Bishop = exports.Knight = exports.Pawn = void 0;
 //Supporters
 const alphabet = "abcdefgh";
 /* Chess Notation Guidelines
@@ -45,7 +48,7 @@ class Piece {
         return this.color;
     }
 }
-export class Pawn extends Piece {
+class Pawn extends Piece {
     validateMove(move) {
         //TODO: implement promotion
         const fromX = alphabet.indexOf(this.position[0]);
@@ -59,7 +62,8 @@ export class Pawn extends Piece {
             (this.moved === false && distX === 0 && distY == 2));
     }
 }
-export class Knight extends Piece {
+exports.Pawn = Pawn;
+class Knight extends Piece {
     validateMove(move) {
         const fromX = alphabet.indexOf(this.position[0]);
         const fromY = parseInt(this.position[1]);
@@ -70,7 +74,8 @@ export class Knight extends Piece {
         return (distX == 2 && distY == 1) || (distX == 1 && distY == 2);
     }
 }
-export class Bishop extends Piece {
+exports.Knight = Knight;
+class Bishop extends Piece {
     validateMove(move) {
         const fromX = alphabet.indexOf(this.position[0]);
         const fromY = parseInt(this.position[1]);
@@ -81,7 +86,8 @@ export class Bishop extends Piece {
         return distX == distY && distX < 8 && distY < 8;
     }
 }
-export class Rook extends Piece {
+exports.Bishop = Bishop;
+class Rook extends Piece {
     validateMove(move) {
         const fromX = alphabet.indexOf(this.position[0]);
         const fromY = parseInt(this.position[1]);
@@ -92,7 +98,8 @@ export class Rook extends Piece {
         return (distX < 8 && distY == 0) || (distX == 0 && distY < 8);
     }
 }
-export class Queen extends Piece {
+exports.Rook = Rook;
+class Queen extends Piece {
     validateMove(move) {
         const fromX = alphabet.indexOf(this.position[0]);
         const fromY = parseInt(this.position[1]);
@@ -105,7 +112,8 @@ export class Queen extends Piece {
             (distX < 8 && distY === 0));
     }
 }
-export class King extends Piece {
+exports.Queen = Queen;
+class King extends Piece {
     validateMove(move) {
         const fromX = alphabet.indexOf(this.position[0]);
         const fromY = parseInt(this.position[1]);
@@ -118,6 +126,7 @@ export class King extends Piece {
             (distX == 0 && distY == 1));
     }
 }
+exports.King = King;
 class Empty {
     constructor(position) {
         this.position = position;
@@ -209,7 +218,7 @@ const baseBoard = {
         new Rook("h8", "black"),
     ],
 };
-export class BoardMoveConnector {
+class BoardMoveConnector {
     constructor(position = baseBoard, materialImbalance = 0) {
         this.position = position;
         this.materialImbalance = materialImbalance;
@@ -309,7 +318,7 @@ export class BoardMoveConnector {
         let xy = { x: 0, y: 0 };
         for (let i = 1; i < 8; i++) {
             xy = directionFunc(oldX, oldY, i);
-            if (this.position[alphabet[xy.x]][xy.y].constructor.name != "Empty") {
+            if (this.position[alphabet[xy.x]][xy.y - 1].constructor.name != "Empty") {
                 pieceDetected = true;
                 break;
             }
@@ -328,8 +337,13 @@ export class BoardMoveConnector {
         let direction = this.getMovementDirection(oldX, oldY, newX, newY);
         let collisionTest = this.checkCollisions(direction, oldX, oldY, newX, newY, colour);
         //Main
-        let validation = true;
-        if (collisionTest === false || this.position[alphabet[oldX]][oldY].validateMove === true)
-            return validation;
+        let validation = false;
+        if (collisionTest === false ||
+            this.position[alphabet[oldX]][oldY]
+                .validateMove === true) {
+            validation = true;
+        }
+        return validation;
     }
 }
+exports.BoardMoveConnector = BoardMoveConnector;

@@ -256,7 +256,7 @@ interface Position {
   centerSquares: any[];
 }
 export class BoardMoveConnector implements Position {
-    position: board;
+  position: board;
   materialImbalance: number;
   centerSquares: any[];
   constructor(position: board = baseBoard, materialImbalance: number = 0) {
@@ -371,12 +371,13 @@ export class BoardMoveConnector implements Position {
         break;
     }
     let pieceDetected: boolean = false;
+
     let xy: any = { x: 0, y: 0 };
     for (let i = 1; i < 8; i++) {
       xy = directionFunc(oldX, oldY, i);
       if (
         this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
-          xy.y
+          xy.y - 1
         ].constructor.name != "Empty"
       ) {
         pieceDetected = true;
@@ -407,7 +408,14 @@ export class BoardMoveConnector implements Position {
     );
     //Main
 
-    let validation: boolean = true;
-    if (collisionTest === false || this.position[alphabet[oldX] as keyof typeof this.position][oldY].validateMove === true) return validation;
+    let validation: boolean = false;
+    if (
+      collisionTest === false ||
+      this.position[alphabet[oldX] as keyof typeof this.position][oldY]
+        .validateMove === true
+    ) {
+      validation = true;
+    }
+    return validation;
   }
 }
