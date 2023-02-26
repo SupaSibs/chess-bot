@@ -378,10 +378,7 @@ export class BoardMoveConnector implements Position {
       if (
         this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
           xy.y - 1
-        ].constructor.name != "Empty" &&
-        this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
-          xy.y - 1
-        ].color = ()
+        ].constructor.name != "Empty"
       ) {
         pieceDetected = true;
         break;
@@ -415,13 +412,11 @@ export class BoardMoveConnector implements Position {
     if (
       collisionTest === false ||
       this.position[alphabet[oldX] as keyof typeof this.position][oldY]
-        .validateMove === false
+        .validateMove === true
     ) {
       validation = true;
     }
     return validation;
   }
-  getAllMoves() {
-    
-  }
+  
 }
