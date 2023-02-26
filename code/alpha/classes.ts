@@ -378,7 +378,9 @@ export class BoardMoveConnector implements Position {
       if (
         this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
           xy.y - 1
-        ].constructor.name != "Empty"
+        ].constructor.name != "Empty"&& this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
+          xy.y - 1
+        ]
       ) {
         pieceDetected = true;
         break;
@@ -390,7 +392,9 @@ export class BoardMoveConnector implements Position {
 
     return pieceDetected;
   }
-
+getMoves() {
+  
+}
   validateMove(originalSquare: string, newSquare: string, colour: string) {
     //Support
     let oldX = alphabet.indexOf(originalSquare[0]);
