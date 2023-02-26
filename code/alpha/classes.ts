@@ -381,7 +381,7 @@ export class BoardMoveConnector implements Position {
         ].constructor.name != "Empty" &&
         this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
           xy.y - 1
-        ].color
+        ].color = ()
       ) {
         pieceDetected = true;
         break;
