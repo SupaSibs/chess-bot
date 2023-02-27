@@ -318,16 +318,8 @@ export class BoardMoveConnector implements Position {
     }
     return direction;
   }
-
-  checkCollisions(
-    direction: number,
-    oldX: any,
-    oldY: any,
-    newX: any,
-    newY: any,
-    colour: any
-  ) {
-    let directionFunc: Function = () => {};
+directionFunc() {
+  let directionFunc: Function = () => {};
     switch (direction) {
       case 1: //top right
         directionFunc = (x: number, y: number, i: number) => {
@@ -370,8 +362,18 @@ export class BoardMoveConnector implements Position {
         };
         break;
     }
+  return directionFunc;
+} 
+  checkCollisions(
+    directionFunc: Function,
+    oldX: any,
+    oldY: any,
+    newX: any,
+    newY: any,
+    colour: any
+  ) {
+    
     let pieceDetected: boolean = false;
-
     let xy: any = { x: 0, y: 0 };
     for (let i = 1; i < 8; i++) {
       xy = directionFunc(oldX, oldY, i);
@@ -402,8 +404,9 @@ getMoves() {
     let newX = alphabet.indexOf(newSquare[0]);
     let newY = parseInt(newSquare[1]);
     let direction = this.getMovementDirection(oldX, oldY, newX, newY);
+    let directionFunc = this.directionFunc()
     let collisionTest = this.checkCollisions(
-      direction,
+      directionFunc,
       oldX,
       oldY,
       newX,

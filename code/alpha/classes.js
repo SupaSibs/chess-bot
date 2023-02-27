@@ -318,7 +318,7 @@ class BoardMoveConnector {
         let xy = { x: 0, y: 0 };
         for (let i = 1; i < 8; i++) {
             xy = directionFunc(oldX, oldY, i);
-            if (this.position[alphabet[xy.x]][xy.y - 1].constructor.name != "Empty") {
+            if (this.position[alphabet[xy.x]][xy.y - 1].constructor.name != "Empty" && this.position[alphabet[xy.x]][xy.y - 1]) {
                 pieceDetected = true;
                 break;
             }
@@ -327,6 +327,8 @@ class BoardMoveConnector {
             }
         }
         return pieceDetected;
+    }
+    getMoves() {
     }
     validateMove(originalSquare, newSquare, colour) {
         //Support
