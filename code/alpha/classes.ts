@@ -318,7 +318,7 @@ export class BoardMoveConnector implements Position {
     }
     return direction;
   }
-directionFunc() {
+directionFunc(direction: number) {
   let directionFunc: Function = () => {};
     switch (direction) {
       case 1: //top right
@@ -375,7 +375,7 @@ directionFunc() {
     
     let pieceDetected: boolean = false;
     let xy: any = { x: 0, y: 0 };
-    for (let i = 1; i < 8; i++) {
+    for (let i = 1; i < 7; i++) {
       xy = directionFunc(oldX, oldY, i);
       if (
         this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
@@ -394,17 +394,21 @@ directionFunc() {
 
     return pieceDetected;
   }
+  getNonEmpty() {
+    let nonEmpty: [] = [];
+for ()
+  }
 getMoves() {
-  
+
 }
   validateMove(originalSquare: string, newSquare: string, colour: string) {
     //Support
     let oldX = alphabet.indexOf(originalSquare[0]);
     let oldY = parseInt(originalSquare[1]);
-    let newX = alphabet.indexOf(newSquare[0]);
+    let newX = alphabet.indexOf(newSquare[0]); 
     let newY = parseInt(newSquare[1]);
     let direction = this.getMovementDirection(oldX, oldY, newX, newY);
-    let directionFunc = this.directionFunc()
+    let directionFunc = this.directionFunc(direction)
     let collisionTest = this.checkCollisions(
       directionFunc,
       oldX,

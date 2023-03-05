@@ -270,7 +270,7 @@ class BoardMoveConnector {
         }
         return direction;
     }
-    checkCollisions(direction, oldX, oldY, newX, newY, colour) {
+    directionFunc(direction) {
         let directionFunc = () => { };
         switch (direction) {
             case 1: //top right
@@ -314,6 +314,9 @@ class BoardMoveConnector {
                 };
                 break;
         }
+        return directionFunc;
+    }
+    checkCollisions(directionFunc, oldX, oldY, newX, newY, colour) {
         let pieceDetected = false;
         let xy = { x: 0, y: 0 };
         for (let i = 1; i < 8; i++) {
@@ -337,7 +340,8 @@ class BoardMoveConnector {
         let newX = alphabet.indexOf(newSquare[0]);
         let newY = parseInt(newSquare[1]);
         let direction = this.getMovementDirection(oldX, oldY, newX, newY);
-        let collisionTest = this.checkCollisions(direction, oldX, oldY, newX, newY, colour);
+        let directionFunc = this.directionFunc(direction);
+        let collisionTest = this.checkCollisions(directionFunc, oldX, oldY, newX, newY, colour);
         //Main
         let validation = false;
         if (collisionTest === false ||
