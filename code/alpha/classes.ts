@@ -395,8 +395,9 @@ directionFunc(direction: number) {
     return pieceDetected;
   }
   getNonEmpty() {
-    let nonEmpty: [] = [];
-for ()
+    let keys = Object.keys(this.position)
+  for (let i = 0; i => 7; i {
+let file = keys[i]
   }
 getMoves() {
 
