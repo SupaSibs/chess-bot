@@ -1,148 +1,7 @@
 /* use strict */
+import { Pawn, Knight, Bishop, Rook, Queen, King } from "./pieces";
+let alphabet = "abcdefgh";
 
-//Supporters
-const alphabet = "abcdefgh";
-
-/* Chess Notation Guidelines
- * The first letter always refers to a piece or a pawn with the following capitalized letters:
- * Pawn = P
- * Knight = N (K refers to the king.)
- * Bishop = B
- * Rook = R
- * Queen = Q
- * King = K
- *
- * TODO: If 2 pieces of the same kind can move to the same square, we add the file or rank of that piece.
- *
- * The second letter, uncapitalized, refers to the file it is in, from a to h.
- *
- * The 3rd letter, which is a number refers to the rank, from 1 to 8.
- *
- * For a capture, append x after the first letter. (Last letter with this notation)
- *
- * For a check, append + to the notation,
- *
- * For a checkmate, append # to the notation.
- *
- * TODO
- *
- * Kingside Castling is O-O.
- *
- * Queenside Castling is O-O-O
- *
- */
-
-class Piece {
-  position: string;
-  moved: boolean;
-  color: string;
-  constructor(position: string, color: string, moved = false) {
-    this.position = position;
-    this.moved = moved;
-    this.color = color;
-  }
-  get pos() {
-    return this.position;
-  }
-  get move() {
-    return this.moved;
-  }
-  get colour() {
-    return this.color;
-  }
-}
-export class Pawn extends Piece {
-  validateMove(move: string) {
-    //TODO: implement promotion
-    const fromX = alphabet.indexOf(this.position[0]);
-    const fromY = parseInt(this.position[1]);
-    const toX = alphabet.indexOf(move[0]);
-    const toY = parseInt(move[1]);
-
-    const distX = Math.abs(toX - fromX);
-    const distY = Math.abs(toY - fromY);
-
-    return (
-      (distX == 0 && distY == 1) ||
-      (move[2] == "x" && distX == 1 && distY == 1) ||
-      (this.moved === false && distX === 0 && distY == 2)
-    );
-  }
-}
-export class Knight extends Piece {
-  validateMove(move: string) {
-    const fromX = alphabet.indexOf(this.position[0]);
-    const fromY = parseInt(this.position[1]);
-    const toX = alphabet.indexOf(move[0]);
-    const toY = parseInt(move[1]);
-
-    const distX = Math.abs(toX - fromX);
-    const distY = Math.abs(toY - fromY);
-
-    return (distX == 2 && distY == 1) || (distX == 1 && distY == 2);
-  }
-}
-export class Bishop extends Piece {
-  validateMove(move: string) {
-    const fromX = alphabet.indexOf(this.position[0]);
-    const fromY = parseInt(this.position[1]);
-    const toX = alphabet.indexOf(move[0]);
-    const toY = parseInt(move[1]);
-
-    const distX = Math.abs(toX - fromX);
-    const distY = Math.abs(toY - fromY);
-
-    return distX == distY && distX < 8 && distY < 8;
-  }
-}
-export class Rook extends Piece {
-  validateMove(move: string) {
-    const fromX = alphabet.indexOf(this.position[0]);
-    const fromY = parseInt(this.position[1]);
-    const toX = alphabet.indexOf(move[0]);
-    const toY = parseInt(move[1]);
-
-    const distX = Math.abs(toX - fromX);
-    const distY = Math.abs(toY - fromY);
-
-    return (distX < 8 && distY == 0) || (distX == 0 && distY < 8);
-  }
-}
-
-export class Queen extends Piece {
-  validateMove(move: string) {
-    const fromX = alphabet.indexOf(this.position[0]);
-    const fromY = parseInt(this.position[1]);
-    const toX = alphabet.indexOf(move[0]);
-    const toY = parseInt(move[1]);
-
-    const distX = Math.abs(toX - fromX);
-    const distY = Math.abs(toY - fromY);
-
-    return (
-      (distX === distY && distX < 8 && distY < 8) ||
-      (distX == 0 && distY < 8) ||
-      (distX < 8 && distY === 0)
-    );
-  }
-}
-export class King extends Piece {
-  validateMove(move: string) {
-    const fromX = alphabet.indexOf(this.position[0]);
-    const fromY = parseInt(this.position[1]);
-    const toX = alphabet.indexOf(move[0]);
-    const toY = parseInt(move[1]);
-
-    const distX = Math.abs(toX - fromX);
-    const distY = Math.abs(toY - fromY);
-
-    return (
-      (distX == 1 && distY == 1) ||
-      (distX == 1 && distY == 0) ||
-      (distX == 0 && distY == 1)
-    );
-  }
-}
 interface board {
   a: any[];
   b: any[];
@@ -318,8 +177,8 @@ export class BoardMoveConnector implements Position {
     }
     return direction;
   }
-directionFunc(direction: number) {
-  let directionFunc: Function = () => {};
+  directionFunc(direction: number) {
+    let directionFunc: Function = () => {};
     switch (direction) {
       case 1: //top right
         directionFunc = (x: number, y: number, i: number) => {
@@ -362,8 +221,8 @@ directionFunc(direction: number) {
         };
         break;
     }
-  return directionFunc;
-} 
+    return directionFunc;
+  }
   checkCollisions(
     directionFunc: Function,
     oldX: any,
@@ -372,16 +231,16 @@ directionFunc(direction: number) {
     newY: any,
     colour: any
   ) {
-    
     let pieceDetected: boolean = false;
     let xy: any = { x: 0, y: 0 };
-    for (let i = 1; i < 7; i++) {
+    for (let i = 0; i <= 7; i++) {
       xy = directionFunc(oldX, oldY, i);
       if (
         this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
-          xy.y - 1
-        ].constructor.name != "Empty"&& this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
-          xy.y - 1
+          xy.y
+        ].constructor.name != "Empty" &&
+        this.position[alphabet[xy.x] as unknown as keyof typeof this.position][
+          xy.y
         ]
       ) {
         pieceDetected = true;
@@ -395,21 +254,29 @@ directionFunc(direction: number) {
     return pieceDetected;
   }
   getNonEmpty() {
-    let keys = Object.keys(this.position)
-  for (let i = 0; i => 7; i {
-let file = keys[i]
+    let fileKeys: string[] = Object.keys(this.position);
+    let nonEmpty: any[] = [];
+    for (let i = 0; i <= 7; i++) {
+      let file = this.position[fileKeys[i] as keyof typeof this.position];
+      let filteredFile = file.filter(
+        (piece) => piece.constructor.name != Empty
+      );
+      filteredFile.forEach((piece) => nonEmpty.push(piece));
+    }
+    return nonEmpty;
   }
-getMoves() {
-
-}
+  getMoves() {
+    let unchecked = this.getNonEmpty();
+    for (let i = 0; i <= unchecked.length - 1; i++) {}
+  }
   validateMove(originalSquare: string, newSquare: string, colour: string) {
     //Support
     let oldX = alphabet.indexOf(originalSquare[0]);
     let oldY = parseInt(originalSquare[1]);
-    let newX = alphabet.indexOf(newSquare[0]); 
+    let newX = alphabet.indexOf(newSquare[0]);
     let newY = parseInt(newSquare[1]);
     let direction = this.getMovementDirection(oldX, oldY, newX, newY);
-    let directionFunc = this.directionFunc(direction)
+    let directionFunc = this.directionFunc(direction);
     let collisionTest = this.checkCollisions(
       directionFunc,
       oldX,
@@ -430,5 +297,4 @@ getMoves() {
     }
     return validation;
   }
-  
 }
