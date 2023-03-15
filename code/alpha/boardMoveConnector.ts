@@ -19,7 +19,84 @@ class Empty {
     this.position = position;
   }
 }
-
+const squareConverter = (square: string) => {
+  return [alphabet.indexOf(square[0]), Number(square[1])];
+};
+const moves = {
+  side: function*(origSquare: string) {
+    let [x, y] = squareConverter(origSquare)
+   let move = []
+    let i = 1;
+    
+      yield [x + i, x - i, y, y]
+      i++
+      yield [x + i, x - i, y, y]
+      i++
+      yield [x - i, x - i, y, y]
+      i++
+      yield [x + i, x - i, y, y]
+      i++
+      yield [x + i, x - i, y, y]
+      i++
+      yield [x + i, x - i, y, y]
+      i++
+  },
+  up: function*(origSquare: string) {
+    let [x, y] = squareConverter(origSquare)
+   let move = []
+    let i = 1;
+    
+      yield [x, x, y + i, y - i]
+      i++
+      yield [x, x, y + i, y - i]
+      i++
+      yield [x, x, y + i, y - i]
+      i++
+      yield [x, x, y + i, y - i]
+      i++
+      yield [x, x, y + i, y - i]
+      i++
+      yield [x, x, y + i, y - i]
+      i++
+  },
+  diaur: function*(origSquare: string) {
+    let [x, y] = squareConverter(origSquare)
+   let move = []
+    let i = 1;
+    
+      yield [x, x, y, y]
+      i++
+      yield [x, x, y, y]
+      i++
+      yield [x, x, y, y]
+      i++
+      yield [x, x, y, y]
+      i++
+      yield [x, x, y, y]
+      i++
+      yield [x, x, y, y]
+      i++
+  },
+  diaul: function*(origSquare: string) {
+    let [x, y] = squareConverter(origSquare)
+   let move = []
+    let i = 1;
+    
+      yield [x, x , y, y]
+      i++
+      yield [x, x , y, y]
+      i++
+      yield [x, x , y, y]
+      i++
+      yield [x, x , y, y]
+      i++
+      yield [x, x, y, y]
+      i++
+      yield [x, x 1, y, y]
+      i++
+  },
+  
+};
 //Supporter end
 
 /* This Chess Engine uses an HCE, Hand-Picked Evaluation.
@@ -269,12 +346,12 @@ export class BoardMoveConnector implements Position {
     let unchecked = this.getNonEmpty();
     for (let i = 0; i <= unchecked.length - 1; i++) {}
   }
+
   validateMove(originalSquare: string, newSquare: string, colour: string) {
     //Support
-    let oldX = alphabet.indexOf(originalSquare[0]);
-    let oldY = parseInt(originalSquare[1]);
-    let newX = alphabet.indexOf(newSquare[0]);
-    let newY = parseInt(newSquare[1]);
+    let [oldX, oldY] = squareConverter(originalSquare)
+    let [newX, newY] = squareConverter(newSquare)
+  
     let direction = this.getMovementDirection(oldX, oldY, newX, newY);
     let directionFunc = this.directionFunc(direction);
     let collisionTest = this.checkCollisions(
